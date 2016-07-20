@@ -49,8 +49,12 @@
             return;
         }
 
+        spinner.spin();
+
         userActions.register(this.state.user).then(function () {
             this.context.router.push('login');
+            spinner.stop();
+            toastr.success("You have been registered.");
         }.bind(this));
     }
 

@@ -10,22 +10,22 @@
 
             callback();
 
-            if (this.checkLocation()) {
+            if (this.checkLocation(true)) {
                 ReactRouter.browserHistory.push('/user/' + user.UserName);
             }
         }.bind(this))
         .fail(function () {
             callback();
 
-            if (!this.checkLocation()) {
+            if (!this.checkLocation(false)) {
                 ReactRouter.browserHistory.push('/login');
             }
-        });
+        }.bind(this));
     }
 
-    checkLocation() {
+    checkLocation(checkRoot) {
         var path = location.pathname.toLowerCase();
-        if (path === "/") {
+        if (path === "/" && checkRoot) {
             return true;
         }
 

@@ -303,6 +303,7 @@
     <Content Include="jsScripts\constants\actionTypes.js" />
     <Content Include="jsScripts\fieldValidator.js" />
     <Content Include="jsScripts\actions\initActions.js" />
+    <Content Include="jsScripts\Spinner.js" />
     <Content Include="jsScripts\stores\baseStore.js" />
     <Content Include="jsScripts\stores\userStore.js" />
     <Content Include="reactScripts\app.jsx" />
@@ -335,6 +336,7 @@
     <None Include="scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\events.js" />
     <Content Include="scripts\flux\Flux.js" />
     <Content Include="scripts\flux\Flux.min.js" />
     <Content Include="scripts\jquery-2.2.4.js" />

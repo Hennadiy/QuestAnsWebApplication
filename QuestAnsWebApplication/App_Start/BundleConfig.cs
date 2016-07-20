@@ -8,10 +8,7 @@ namespace QuestAnsWebApplication.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new BabelBundle("~/bundles/main")
-                .Include(
-                        "~/jsScripts/ajax.js",
-                        "~/jsScripts/fieldValidator.js"
-                    )
+                .IncludeDirectory("~/jsScripts/", "*.js", false)
 
                 .IncludeDirectory("~/jsScripts/dispatcher", "*.js", true)
                 .IncludeDirectory("~/jsScripts/constants", "*.js", true)
@@ -23,20 +20,18 @@ namespace QuestAnsWebApplication.App_Start
                 .IncludeDirectory("~/reactScripts/navigation", "*.jsx", true)
                 .IncludeDirectory("~/reactScripts/pages", "*.jsx", true)
 
-                .Include(
-                        "~/reactScripts/app.jsx",
-                        "~/reactScripts/routes.jsx"
-                    )
+                .IncludeDirectory("~/reactScripts/", "*.jsx", false)
                 );
 
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
+                "~/scripts/events.js",
                 "~/scripts/flux/flux.js",
                 "~/scripts/react/react.js",
                 "~/scripts/react/react-dom.js",
                 "~/scripts/react/react-with-addons.js",
                 "~/scripts/react/ReactRouter.js",
                 "~/Scripts/jquery-2.2.4.min.js",
-                "~/scripts/spin/spin.js",
+                "~/scripts/spin.js",
                 "~/Scripts/toastr.min.js",
                 "~/Scripts/bootstrap.min.js"
                 ));
