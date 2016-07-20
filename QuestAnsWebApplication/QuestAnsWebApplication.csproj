@@ -335,7 +335,6 @@
     <None Include="scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
-    <Content Include="scripts\events\events.js" />
     <Content Include="scripts\flux\Flux.js" />
     <Content Include="scripts\flux\Flux.min.js" />
     <Content Include="scripts\jquery-2.2.4.js" />
@@ -351,6 +350,8 @@
     <Content Include="scripts\react\react.min.js" />
     <Content Include="scripts\react\ReactRouter.js" />
     <Content Include="scripts\react\ReactRouter.min.js" />
+    <Content Include="scripts\spin.js" />
+    <Content Include="scripts\spin.min.js" />
     <Content Include="scripts\toastr.js" />
     <Content Include="scripts\toastr.min.js" />
     <Content Include="Web.config" />

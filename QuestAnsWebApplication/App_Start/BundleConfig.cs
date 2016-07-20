@@ -30,13 +30,13 @@ namespace QuestAnsWebApplication.App_Start
                 );
 
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
-                "~/scripts/events/events.js",
                 "~/scripts/flux/flux.js",
                 "~/scripts/react/react.js",
                 "~/scripts/react/react-dom.js",
                 "~/scripts/react/react-with-addons.js",
                 "~/scripts/react/ReactRouter.js",
                 "~/Scripts/jquery-2.2.4.min.js",
+                "~/scripts/spin/spin.js",
                 "~/Scripts/toastr.min.js",
                 "~/Scripts/bootstrap.min.js"
                 ));
