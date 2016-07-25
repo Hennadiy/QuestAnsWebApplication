@@ -11,11 +11,11 @@ using QuestAnsWebServices.Extensions;
 
 namespace QuestAnsWebServices.Providers
 {
-    public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
+    public class UserOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
 
-        public ApplicationOAuthProvider(string publicClientId)
+        public UserOAuthProvider(string publicClientId)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(publicClientId));
 

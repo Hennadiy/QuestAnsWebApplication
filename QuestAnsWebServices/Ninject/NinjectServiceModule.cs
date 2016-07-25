@@ -1,8 +1,9 @@
-﻿using System.Security.Principal;
-using Microsoft.Owin.Security;
+﻿using Microsoft.Owin.Security;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using QuestAnsWebServices.App_Start;
+using QuestAnsWebServices.DbExtensions;
+using QuestAnsWebServices.Helpers;
 using QuestAnsWebServices.Providers;
 using QuestAnsWebServices.Repositories;
 
@@ -16,8 +17,14 @@ namespace QuestAnsWebServices.Ninject
             Kernel.Bind<IAuthenticationManager>().ToMethod(MotherObject.GetAuthenticationManager).InRequestScope();
 
             Kernel.Bind<IUserRepository>().To<UserRepository>();
+            Kernel.Bind<ICityRepository>().To<CityRepository>();
+            Kernel.Bind<ICountryRepository>().To<CountryRepository>();
 
-            Kernel.Bind<ApplicationDbContext>().ToSelf();
+            Kernel.Bind<IApplicationDbInitializer>().To<ApplicationDbInitializer>();
+            Kernel.Bind<IJsonHelper>().To<JsonHelper>();
+
+            Kernel.Bind<UserDbContext>().ToSelf().InSingletonScope();
+            Kernel.Bind<ApplicationDbContext>().ToSelf().InSingletonScope();
         }
     }
 }

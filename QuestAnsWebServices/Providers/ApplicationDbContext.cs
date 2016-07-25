@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using QuestAnsWebServices.EF.User;
+﻿using QuestAnsWebServices.DbExtensions;
+using QuestAnsWebServices.EF.Info;
+using System.Data.Entity;
 
 namespace QuestAnsWebServices.Providers
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
+            Database.SetInitializer(new CreateApplicationDatabaseIfNotExists());
         }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
+        public DbSet<CityCountry> CitiesCountries { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<City> Cities { get; set; }
     }
 }

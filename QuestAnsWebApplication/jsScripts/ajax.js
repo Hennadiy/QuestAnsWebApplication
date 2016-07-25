@@ -71,6 +71,7 @@ class Ajax {
     }
 
     defaultFailFunc(a, b) {
+        toastr.error("Error occurred. Please contact administrator and reproduce your actions.");
         console.error(a);
         console.error(b);
     }

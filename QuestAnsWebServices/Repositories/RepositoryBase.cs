@@ -9,7 +9,7 @@ namespace QuestAnsWebServices.Repositories
         where T : class
         where Context : DbContext
     {
-        private Context _context;
+        protected Context _context;
 
         public RepositoryBase(Context context)
         {
@@ -18,7 +18,7 @@ namespace QuestAnsWebServices.Repositories
             _context = context;
         }
 
-        protected void AddItem(DTO dtoItem)
+        protected T AddItem(DTO dtoItem)
         {
             Contract.Requires<ArgumentNullException>(dtoItem != null);
 
@@ -29,6 +29,8 @@ namespace QuestAnsWebServices.Repositories
 
             entity.Add(dbItem);
             _context.SaveChanges();
+
+            return dbItem;
         }
 
         protected void DeleteItem(long id)

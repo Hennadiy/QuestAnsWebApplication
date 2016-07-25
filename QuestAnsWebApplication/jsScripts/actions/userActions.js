@@ -73,6 +73,21 @@ class UserActions {
         return defer.promise();
     }
 
+    update(user) {
+        var defer = $.Deferred();
+
+        ajax.post(USER_CONTROLLER_NAME, 'UpdateCurrentUser', user, true, function (user) {
+            Dispatcher.dispatch({
+                actionType: ActionTypes.USER_UPDATE,
+                user: user
+            });
+
+            defer.resolve(user)
+        });
+
+        return defer.promise();
+    }
+
     signout() {
         var defer = $.Deferred();
 

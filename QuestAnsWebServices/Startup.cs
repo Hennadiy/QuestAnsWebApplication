@@ -22,7 +22,7 @@ namespace QuestAnsWebServices
             app.UseNinjectMiddleware(NinjectWebCommon.GetKernel);
             app.UseNinjectWebApi(GlobalConfiguration.Configuration);
             */
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(UserDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user 
@@ -33,7 +33,7 @@ namespace QuestAnsWebServices
             var OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
+                Provider = new UserOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/login"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
                 // Note: Remove the following line before you deploy to production:

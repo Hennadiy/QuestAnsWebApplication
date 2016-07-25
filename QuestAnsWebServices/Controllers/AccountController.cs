@@ -21,19 +21,35 @@ namespace QuestAnsWebServices.Controllers
         }
 
         [HttpGet]
-        public UserDTO GetCurrentUser()
+        public async Task<IHttpActionResult> GetCurrentUser()
         {
             var userId = GetCurrentUserId();
 
-            return _userRepository.GetUserById(userId);
+            var user = await _userRepository.GetUserById(userId);
+
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> UpdateCurrentUser(UserUpdateDTO userUpdateDTO)
+        {
+            Contract.Requires<ArgumentNullException>(userUpdateDTO != null);
+
+            var userId = GetCurrentUserId();
+
+            var user = await _userRepository.UpdateCurrentUser(userId, userUpdateDTO);
+
+            return Ok(user);
         }
 
         [HttpGet]
-        public async Task<UserDTO> GetUser(string userName)
+        public async Task<IHttpActionResult> GetUser(string userName)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(userName));
 
-            return await _userRepository.GetUser(userName);
+            var user = await _userRepository.GetUser(userName);
+
+            return Ok(user);
         }
 
         [HttpPost]

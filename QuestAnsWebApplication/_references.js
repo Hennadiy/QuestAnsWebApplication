@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="jsscripts/actions/auth.js" />
+/// <reference path="jsscripts/actions/infoactions.js" />
 /// <reference path="jsScripts/actions/initActions.js" />
 /// <reference path="jsScripts/actions/userActions.js" />
 /// <reference path="jsScripts/ajax.js" />

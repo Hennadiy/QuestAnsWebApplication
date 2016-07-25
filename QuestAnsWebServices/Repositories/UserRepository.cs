@@ -13,9 +13,10 @@ namespace QuestAnsWebServices.Repositories
 {
     public interface IUserRepository
     {
-        UserDTO GetUserById(string userId);
+        Task<UserDTO> GetUserById(string userId);
         Task<UserDTO> GetUser(string userName);
         Task<IdentityResult> Register(UserRegisterDTO userDTO);
+        Task<UserDTO> UpdateCurrentUser(string userId, UserUpdateDTO userDTO);
         Task<IdentityResult> ChangePasswordForCurrentUser(string userId, UserChangePasswordDTO model);
         void Signout();
     }
@@ -34,11 +35,11 @@ namespace QuestAnsWebServices.Repositories
             _authManager = authManager;
         }
 
-        public UserDTO GetUserById(string userId)
+        public async Task<UserDTO> GetUserById(string userId)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(userId));
 
-            var user = _userManager.FindById(userId);
+            var user = await GetUserByIdInternal(userId);
 
             return Mapper.Map<UserDTO>(user);
         }
@@ -74,6 +75,27 @@ namespace QuestAnsWebServices.Repositories
         public void Signout()
         {
             _authManager.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        public async Task<UserDTO> UpdateCurrentUser(string userId, UserUpdateDTO userDTO)
+        {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(userId));
+            Contract.Requires<ArgumentNullException>(userDTO != null);
+
+            var user = await GetUserByIdInternal(userId);
+
+            Mapper.Map(userDTO, user);
+
+            await _userManager.UpdateAsync(user);
+
+            return await GetUserById(userId);
+        }
+
+        private async Task<ApplicationUser> GetUserByIdInternal(string userId)
+        {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(userId));
+
+            return await _userManager.FindByIdAsync(userId);
         }
     }
 }

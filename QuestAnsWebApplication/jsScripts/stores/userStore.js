@@ -28,6 +28,10 @@ Dispatcher.register(function (action) {
             user = null;
             userStore.emitChange();
             break;
+        case ActionTypes.USER_UPDATE:
+            user = user;
+            userStore.emitChange();
+            break;
         case ActionTypes.REGISTER:
             break;
         default: break;

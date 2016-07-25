@@ -290,6 +290,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="jsScripts\actions\Auth.js" />
+    <Content Include="jsScripts\actions\infoActions.js" />
     <Content Include="jsScripts\dispatcher\appDispatcher.js" />
     <Content Include="jsScripts\actions\userActions.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -316,6 +317,9 @@
     <Content Include="Content\toastr.less" />
     <Content Include="reactScripts\pages\userPage.jsx" />
     <Content Include="reactScripts\components\displayField.jsx" />
+    <Content Include="reactScripts\components\panel.jsx" />
+    <Content Include="reactScripts\forms\editUser.jsx" />
+    <Content Include="reactScripts\components\dropdown.jsx" />
     <None Include="_references.js" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />

@@ -61,5 +61,11 @@ namespace QuestAnsWebServices.App_Start
             kernel.Load(Assembly.GetExecutingAssembly());
             return kernel;
         }
+
+        public static T Get<T>()
+        {
+            var kernel = new StandardKernel(new NinjectServiceModule());
+            return kernel.Get<T>();
+        }
     }
 }

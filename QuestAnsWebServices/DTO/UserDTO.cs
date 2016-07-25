@@ -11,6 +11,20 @@ namespace QuestAnsWebServices.DTO
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public DateTime Birthdate { get; set; }
+        public string Skype { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+    }
+
+    public class UserUpdateDTO
+    {
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime Birthdate { get; set; }
+        public string Skype { get; set; }
+        public int Country { get; set; }
+        public int City { get; set; }
     }
 
     public class UserLoginDTO
