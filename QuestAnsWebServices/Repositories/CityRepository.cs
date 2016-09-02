@@ -11,7 +11,7 @@ namespace QuestAnsWebServices.Repositories
     public interface ICityRepository
     {
         CityDTO[] GetCities(int countryId);
-        void AddCity(CityDTO cityDto);
+        void AddCity(int coutnryId, CityDTO cityDto);
     }
 
     public class CityRepository : RepositoryBase<CityDTO, City, ApplicationDbContext>, ICityRepository
@@ -28,11 +28,20 @@ namespace QuestAnsWebServices.Repositories
                     .ToArray();
         }
 
-        public void AddCity(CityDTO cityDto)
+        public void AddCity(int coutnryId, CityDTO cityDto)
         {
             Contract.Requires<ArgumentNullException>(cityDto != null);
 
-            AddItem(cityDto);
+            var cityDbItem = AddItem(cityDto);
+
+            var entity = _context.Set<CityCountry>();
+            var dbItem = entity.Create();
+
+            dbItem.CountryId = coutnryId;
+            dbItem.CityId = cityDbItem.Id;
+
+            entity.Add(dbItem);
+            _context.SaveChanges();
         }
     }
 }

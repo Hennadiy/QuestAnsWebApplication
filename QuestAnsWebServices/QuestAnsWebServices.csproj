@@ -268,13 +268,13 @@
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="DbExtensions\ApplicationDbInitializer.cs" />
     <Compile Include="DbExtensions\CreateApplicationDatabaseIfNotExists.cs" />
+    <Compile Include="DbExtensions\DbExtension.cs" />
     <Compile Include="DTO\InfoDTO.cs" />
     <Compile Include="EF\Info\CityCountry.cs" />
     <Compile Include="EF\Info\City.cs" />
     <Compile Include="EF\Info\Country.cs" />
     <Compile Include="Helpers\IJsonHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -282,7 +282,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Providers\ApplicationDbContext.cs" />
-    <Compile Include="Providers\UserDbContext.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

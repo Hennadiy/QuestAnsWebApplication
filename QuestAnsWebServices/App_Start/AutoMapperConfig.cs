@@ -12,7 +12,9 @@ namespace QuestAnsWebServices
             Mapper.Initialize(
                 cfg =>
                 {
+                    //todo proper mapping
                     cfg.CreateMap<ApplicationUser, UserDTO>();
+
                     cfg.CreateMap<UserRegisterDTO, ApplicationUser>();
                     cfg.CreateMap<UserUpdateDTO, ApplicationUser>();
 

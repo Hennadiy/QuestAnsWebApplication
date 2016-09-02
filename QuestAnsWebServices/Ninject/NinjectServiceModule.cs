@@ -23,7 +23,6 @@ namespace QuestAnsWebServices.Ninject
             Kernel.Bind<IApplicationDbInitializer>().To<ApplicationDbInitializer>();
             Kernel.Bind<IJsonHelper>().To<JsonHelper>();
 
-            Kernel.Bind<UserDbContext>().ToSelf().InSingletonScope();
             Kernel.Bind<ApplicationDbContext>().ToSelf().InSingletonScope();
         }
     }

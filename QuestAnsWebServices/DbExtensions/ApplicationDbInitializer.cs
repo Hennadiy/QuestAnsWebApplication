@@ -38,7 +38,7 @@ namespace QuestAnsWebServices.DbExtensions
 
                 foreach (var city in country.Cities)
                 {
-                    cityRepository.AddCity(new CityDTO
+                    cityRepository.AddCity(countryId, new CityDTO
                     {
                         CountryId = countryId,
                         Value = city

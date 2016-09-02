@@ -22,7 +22,7 @@ namespace QuestAnsWebServices
             app.UseNinjectMiddleware(NinjectWebCommon.GetKernel);
             app.UseNinjectWebApi(GlobalConfiguration.Configuration);
             */
-            app.CreatePerOwinContext(UserDbContext.Create);
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user 

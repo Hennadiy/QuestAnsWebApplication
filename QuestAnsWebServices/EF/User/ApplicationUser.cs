@@ -35,17 +35,17 @@ namespace QuestAnsWebServices.EF.User
             }
         }
 
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
 
         [MaxLength(24)]
         [MinLength(3)]
         public string Skype { get; set; }
 
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
 
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         [ForeignKey("CityId")]
         public virtual City City { get; set; }
     }

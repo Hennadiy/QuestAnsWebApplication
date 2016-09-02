@@ -1,7 +1,0 @@
-﻿var ActionTypes = {
-    SIGNIN: "SIGNIN",
-    REGISTER: "REGISTER",
-    SIGNOUT: "SIGNOUT",
-    INIT: "INIT",
-    USER_UPDATE: "USER_UPDATE"
-}

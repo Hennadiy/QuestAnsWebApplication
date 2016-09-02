@@ -1,4 +1,5 @@
 ﻿using QuestAnsWebServices.Providers;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -9,20 +10,10 @@ namespace QuestAnsWebServices
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
             AutoMapperConfig.Register();
+            DbExtension.Initialize<ApplicationDbContext>(false);
 
-            //TODO: rewrite in better way
-
-            using (var context = new ApplicationDbContext())
-            {
-                context.Database.Initialize(false);
-            }
-
-            using (var context = new UserDbContext())
-            {
-                context.Database.Initialize(false);
-            }
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
 
         protected void Application_BeginRequest()
