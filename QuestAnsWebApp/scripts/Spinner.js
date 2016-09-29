@@ -23,11 +23,10 @@ class SpinnerCustom {
             left: '50%',   // Left position relative to parent
             shadow: true,   // Whether to render a shadow
             hwaccel: false,   // Whether to use hardware acceleration
-            position: 'absolute',   // Element positioning
+            position: 'fixed'   // Element positioning
         };
         this.spinner = new Spinner(options)
         this.target = document.getElementById("app");
-        this._backdrop = null;
         this.BACKDROP_TRANSITION_DURATION = 500;
     }
 
@@ -45,29 +44,30 @@ class SpinnerCustom {
         var animate = "fade";
         var doAnimate = $.support.transition && animate
 
-        this._backdrop = $(document.createElement('div'));
+        var _backdrop = $(document.createElement('div'));
 
-        this._backdrop.addClass('modal-backdrop ' + animate)
+        _backdrop.addClass('modal-backdrop ' + animate)
             .appendTo("body")
 
-        if (doAnimate) this._backdrop[0].offsetWidth // force reflow
+        if (doAnimate) _backdrop[0].offsetWidth // force reflow
 
-        this._backdrop.addClass('in')
+        _backdrop.addClass('in')
     }
 
     hideBackdrop() {
         var callbackRemove = function () {
-            this._backdrop.remove()
+            _backdrop.remove();
         };
 
-        this._backdrop.removeClass('in')
+        var _backdrop = $('.modal-backdrop');
+        _backdrop.removeClass('in');
 
-        $.support.transition && this._backdrop.hasClass('fade') ?
-            this._backdrop
-            .one('bsTransitionEnd', callbackRemove)
-            .emulateTransitionEnd(this.BACKDROP_TRANSITION_DURATION) :
+        $.support.transition && _backdrop.hasClass('fade') ?
+            _backdrop
+                .one('bsTransitionEnd', callbackRemove)
+                .emulateTransitionEnd(this.BACKDROP_TRANSITION_DURATION) :
             callbackRemove()
     }
 }
 
-module.exports.spinner = new SpinnerCustom();
+module.exports = new SpinnerCustom();

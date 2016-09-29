@@ -1,9 +1,13 @@
 ﻿var React = require('react');
+var $ = require('jquery');
 var EditUserForm = require('../forms/editUserForm.jsx');
 var DisplayUserForm = require('../forms/displayUserForm.jsx');
 var Panel = require('../components/panel.jsx');
 var userStore = require('../../scripts/stores/userStore');
 var userActions = require('../../scripts/actions/userActions');
+var spinner = require('../../scripts/Spinner');
+var toastr = require('toastr');
+var Checker = require('../../scripts/checker');
 
 class UserPage extends React.Component {
     constructor() {
@@ -17,6 +21,7 @@ class UserPage extends React.Component {
                 UserName: '',
                 Skype: '',
                 PhoneNumber: '',
+                PhotoUrl: '',
                 Birthdate: null,
                 CityId: null,
                 City: {
@@ -27,6 +32,7 @@ class UserPage extends React.Component {
                     Value: null
                 }
             },
+            image: null,
             currentUser: userStore.getCurrentUser(),
             allowEdit: false,
             isEditing: false
@@ -36,6 +42,7 @@ class UserPage extends React.Component {
         this.saveUser = this.saveUser.bind(this);
         this.goToEdit = this.goToEdit.bind(this);
         this.cancelEditing = this.cancelEditing.bind(this);
+        this.addImage = this.addImage.bind(this);
     }
 
     componentWillMount() {
@@ -72,13 +79,37 @@ class UserPage extends React.Component {
     }
 
     saveUser(event) {
+        function updateUser() {
+            userActions.update(this.state.user).then(function (user) {
+                this.setState({ user: user, allowEdit: true, isEditing: false });
+                spinner.stop();
+                toastr.success("Your profile have been updated.");
+            }.bind(this));
+        }
+
+        spinner.spin();
         event.preventDefault();
 
-        this.state.user.Birthdate = this.state.user.Birthdate.toJSON();
+        if (this.state.user.Birthdate) {
+            this.state.user.Birthdate = this.state.user.Birthdate.toJSON();
+        }
 
-        userActions.update(this.state.user).then(function (user) {
-            this.setState({ user: user, allowEdit: true, isEditing: false });
-        }.bind(this));
+        this.state.user.CountryId = Checker.checkDropDownValue(this.state.user.CountryId);
+        this.state.user.CityId = Checker.checkDropDownValue(this.state.user.CityId);
+
+        if (this.state.image) {
+            userActions.uploadUserPhoto(this.state.image).then(function (photoUrl) {
+                this.state.user.PhotoUrl = photoUrl;
+                updateUser.bind(this)();
+            }.bind(this));
+        }
+        else {
+            updateUser.bind(this)();
+        }
+    }
+
+    addImage(file) {
+        this.setState({ image: file });
     }
 
     goToEdit(event) {
@@ -90,7 +121,7 @@ class UserPage extends React.Component {
     render() {
         var content;
         if (this.state.isEditing) {
-            content = (<EditUserForm user={this.state.user} onSave={this.saveUser} onChange={this.setUserState} onCancel={this.cancelEditing } />);
+            content = (<EditUserForm user={this.state.user} onSave={this.saveUser} addImage={this.addImage} onChange={this.setUserState} onCancel={this.cancelEditing } />);
         }
         else {
             content = (<DisplayUserForm user={this.state.user } />);
@@ -106,14 +137,7 @@ class UserPage extends React.Component {
 
         return (
             <Panel headerText={fullName} additional={additional}>
-                <div className="row">
-                    <div className="col-md-5">
-                        
-                    </div>
-                    <div className="col-md-7">
-                        {content}
-                    </div>
-                </div>
+                {content}
             </Panel>
             );
     }

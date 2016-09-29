@@ -30,6 +30,23 @@ class UserActions {
         return defer.promise();
     }
 
+    uploadUserPhoto(image) {
+        var defer = $.Deferred();
+
+        ajax.post(USER_CONTROLLER_NAME, 'UploadPhoto', image, true, function (userModel) {
+            Dispatcher.dispatch({
+                actionType: ActionTypes.UPLOAD_PHOTO,
+                user: userModel
+            });
+
+            defer.resolve(userModel)
+        }, function () {
+            defer.reject();
+        });
+
+        return defer.promise();
+    }
+
     getUserByUserName(userName) {
         var defer = $.Deferred();
 

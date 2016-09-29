@@ -12,6 +12,14 @@
         }
         return '';
     }
+
+    static checkDropDownValue(value) {
+        if (value == -1) {
+            return null;
+        }
+        return value;
+    }
+
 }
 
 module.exports = Checker;

@@ -19,10 +19,15 @@ var config = {
         dist: {
             html: 'build',
             js: 'build/js',
-            css: 'build/css'
+            css: 'build/css',
+            images: 'build/content'
         },
         src: {
             html: 'views/*.html',
+            images: [
+                'Content/*.*',
+                'Content/*-*.*'
+                ],
             copyCssFiles: [
                 'node_modules/bootstrap/dist/css/bootstrap.css.map'
             ],
@@ -33,14 +38,7 @@ var config = {
                 'CSS/*.less',
                 'CSS/*.css'
             ],
-            mainJs: 'reactScripts/routes.jsx',
-            js: [
-                'scripts/*/*.js',
-                'scripts/*.js',
-
-                'reactScripts/*/*.jsx',
-                'reactScripts/*.jsx'
-            ]
+            mainJs: 'reactScripts/routes.jsx'
         }
     },
 };
@@ -57,11 +55,8 @@ gulp.task('js', function () {
 
 gulp.task('css', function () {
 
-    var copyFiles = config.paths.src.copyCssFiles;
-    for (var i = 0; i < copyFiles.length; i++) {
-        gulp.src(copyFiles[i])
-            .pipe(gulp.dest(config.paths.dist.css))
-    }
+    gulp.src(config.paths.src.copyCssFiles)
+        .pipe(gulp.dest(config.paths.dist.css))
 
     return gulp.src(config.paths.src.css)
         //.pipe(uglify())
@@ -71,10 +66,15 @@ gulp.task('css', function () {
         .pipe(connect.reload());
 });
 
+gulp.task('images', function () {
+    gulp.src(config.paths.src.images)
+        .pipe(gulp.dest(config.paths.dist.images));
+});
+
 gulp.task('watch', function () {
-    gulp.watch(config.paths.src.html, ['html'])
-    gulp.watch(config.paths.src.css, ['css'])
-    gulp.watch(config.paths.src.js, ['js'])
+    gulp.watch(config.paths.src.html, ['html']);
+    gulp.watch(config.paths.src.css, ['css']);
+    gulp.watch(config.paths.src.js, ['js']);
 });
 
 gulp.task('connect', function () {
@@ -92,7 +92,7 @@ gulp.task('open', ['connect'], function () {
         .pipe(open({ uri: config.serverConfig.devBaseUrl + ':' + config.serverConfig.port + '/' }));
 });
 
-gulp.task('html', ['js', 'css'], function () {
+gulp.task('html', ['js', 'css', 'images'], function () {
     gulp.src(config.paths.src.html)
         .pipe(gulp.dest(config.paths.dist.html))
         .pipe(connect.reload());

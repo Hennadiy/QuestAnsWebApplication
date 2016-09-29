@@ -74,9 +74,13 @@ class Ajax {
     }
 
     defaultFailFunc(a, b) {
-        toastr.error("Error occurred. Please contact administrator and reproduce your actions.");
+        if (a.responseJSON.error_description) {
+            toastr.error(a.responseJSON.error_description);
+        }
+        else {
+            toastr.error("Error occurred. Please contact administrator and reproduce your actions.");
+        }
         console.error(a);
-        console.error(b);
     }
 }
 module.exports = new Ajax();

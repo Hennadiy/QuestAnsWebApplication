@@ -50,19 +50,21 @@
     <Compile Include="scripts\stores\userStore.js" />
     <Compile Include="scripts\react\react-dom-server.js" />
     <Compile Include="scripts\react\react-dom-server.min.js" />
-    <Compile Include="scripts\react\react-dom.js" />
     <Compile Include="scripts\react\react-dom.min.js" />
     <Compile Include="scripts\react\react-with-addons.js" />
     <Compile Include="scripts\react\react-with-addons.min.js" />
     <Compile Include="scripts\react\ReactRouter.js" />
     <Compile Include="scripts\react\ReactRouter.min.js" />
+    <Content Include="Content\upload-icon.jpg" />
     <Content Include="CSS\Site.less" />
     <Content Include="package.json" />
     <Content Include="reactScripts\app.jsx" />
     <Content Include="reactScripts\components\checkbox.jsx" />
     <Content Include="reactScripts\components\datepickerqa.jsx" />
     <Content Include="reactScripts\components\displayField.jsx" />
+    <Content Include="reactScripts\components\displayUserImage.jsx" />
     <Content Include="reactScripts\components\dropdown.jsx" />
+    <Content Include="reactScripts\components\editUserImage.jsx" />
     <Content Include="reactScripts\components\field.jsx" />
     <Content Include="reactScripts\components\panel.jsx" />
     <Content Include="reactScripts\components\simpleButton.jsx" />
@@ -82,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CSS\" />
+    <Folder Include="Content\" />
     <Folder Include="views\" />
     <Folder Include="scripts\" />
     <Folder Include="scripts\actions\" />

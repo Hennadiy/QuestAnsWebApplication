@@ -4,6 +4,7 @@ var SimpleButton = require('../components/simplebutton.jsx');
 var Dropdown = require('../components/dropdown.jsx');
 var DatepickerQA = require('../components/datepickerqa.jsx');
 var infoActions = require('../../scripts/actions/infoActions');
+var EditUserImage = require('../components/edituserImage.jsx');
 
 class EditUserForm extends React.Component {
     constructor() {
@@ -35,22 +36,37 @@ class EditUserForm extends React.Component {
 
     onChangeCountry(event) {
         this.props.onChange(event);
+        if (event.value === -1) {
+            this.props.onChange({
+                target: {
+                    name: 'CountryId',
+                    value: -1
+                }
+            });
+        }
         this.loadCities();
     }
 
     render() {
         return (
-            <form>
-                <Field label="Name" name="Name" value={this.props.user.Name} onChange={this.props.onChange } />
-                <Field label="Surname" name="Surname" value={this.props.user.Surname} onChange={this.props.onChange } />
-                <DatepickerQA label="Birthdate" name="Birthdate" value={this.props.user.Birthdate} onChange={this.props.onChange} />
-                <Dropdown label="Country" name="CountryId" value={this.props.user.CountryId} values={this.state.countries} onChange={this.onChangeCountry } defaultValueText="Select Country" />
-                <Dropdown label="City" name="CityId" value={this.props.user.CityId} values={this.state.cities} onChange={this.props.onChange } defaultValueText="Select City" />
-                <Field label="Skype" name="Skype" value={this.props.user.Skype} onChange={this.props.onChange } />
-                <Field label="Phone Number" name="PhoneNumber" value={this.props.user.PhoneNumber} onChange={this.props.onChange } />
-                <SimpleButton text="Save" onClick={this.props.onSave } />
-                <SimpleButton text="Cancel" onClick={this.props.onCancel } />
-            </form>
+            <div className="row">
+                <div className="col-md-5">
+                    <EditUserImage name="image" url={this.props.user.PhotoUrl} onChange={this.props.addImage} />
+                </div>
+                <div className="col-md-7">
+                    <form>
+                        <Field label="Name" name="Name" value={this.props.user.Name} onChange={this.props.onChange } />
+                        <Field label="Surname" name="Surname" value={this.props.user.Surname} onChange={this.props.onChange } />
+                        <DatepickerQA label="Birthdate" name="Birthdate" value={this.props.user.Birthdate} onChange={this.props.onChange} />
+                        <Dropdown label="Country" name="CountryId" value={this.props.user.CountryId} values={this.state.countries} onChange={this.onChangeCountry } defaultValueText="Select Country" />
+                        <Dropdown label="City" name="CityId" value={this.props.user.CityId} values={this.state.cities} onChange={this.props.onChange } defaultValueText="Select City" />
+                        <Field label="Skype" name="Skype" value={this.props.user.Skype} onChange={this.props.onChange } />
+                        <Field label="Phone Number" name="PhoneNumber" value={this.props.user.PhoneNumber} onChange={this.props.onChange } />
+                        <SimpleButton text="Save" onClick={this.props.onSave } />
+                        <SimpleButton text="Cancel" onClick={this.props.onCancel } />
+                    </form>
+                </div>
+            </div>
         );
     }
 }

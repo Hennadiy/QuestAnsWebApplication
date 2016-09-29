@@ -1,10 +1,12 @@
-﻿using System;
+﻿using QuestAnsWebServices.DTO;
+using QuestAnsWebServices.Extensions;
+using QuestAnsWebServices.Models;
+using QuestAnsWebServices.Repositories;
+using System;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
-using QuestAnsWebServices.DTO;
-using QuestAnsWebServices.Extensions;
-using QuestAnsWebServices.Repositories;
 
 namespace QuestAnsWebServices.Controllers
 {
@@ -40,6 +42,18 @@ namespace QuestAnsWebServices.Controllers
             var user = await _userRepository.UpdateCurrentUser(userId, userUpdateDTO);
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        public IHttpActionResult UploadPhoto(Image image)
+        {
+            Contract.Requires<ArgumentNullException>(image != null);
+
+            var userId = GetCurrentUserId();
+            var baseUri = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath, string.Empty);
+            var path = _userRepository.UploadPhoto(image, userId, baseUri);
+
+            return Ok(path);
         }
 
         [HttpGet]

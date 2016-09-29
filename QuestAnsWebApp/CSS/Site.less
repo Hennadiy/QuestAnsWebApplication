@@ -10,6 +10,45 @@
     padding-top: 20px;
 }
 
+.spinner {
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+}
+
+input.imagePicker {
+    max-width: initial;
+}
+
+.imagePickerIcon {
+    background-image: url('../content/upload-icon.jpg');
+    cursor: pointer;
+    position: absolute;
+    left: 424px;
+    top: 29px;
+    width: 30px;
+    height: 25px;
+}
+
+.editImageContainer > div > .imagePickerHidden {
+    display: none;
+}
+
+.userImageContainer, .editUserImageContainer {
+    text-align: center;
+}
+
+.editUserImage {
+    padding-top: 24px;
+}
+
+.userImage, .editUserImage {
+    min-width: 250px;
+    max-width: 444px;
+    max-height: 400px;
+    overflow: hidden;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -32,6 +71,6 @@ textarea {
     width: 100%;
 }
 
-    .react-datepicker__input-container input {
-        .form-control;
-    }
+.react-datepicker__input-container input {
+    .form-control;
+}

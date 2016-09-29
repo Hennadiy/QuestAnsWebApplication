@@ -24,5 +24,20 @@ namespace QuestAnsWebServices.Providers
         public DbSet<City> Cities { get; set; }
 
         public DbSet<CityCountry> CitiesCountries { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>()
+                        .HasOptional(s => s.City)
+                        .WithMany()
+                        .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ApplicationUser>()
+                        .HasOptional(s => s.Country)
+                        .WithMany()
+                        .WillCascadeOnDelete(true);
+        }
     }
 }

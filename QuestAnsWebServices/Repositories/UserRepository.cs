@@ -1,13 +1,17 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using ImageResizer;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using QuestAnsWebServices.App_Start;
 using QuestAnsWebServices.DTO;
 using QuestAnsWebServices.EF.User;
+using QuestAnsWebServices.Helpers;
+using QuestAnsWebServices.Models;
+using System;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace QuestAnsWebServices.Repositories
 {
@@ -18,6 +22,7 @@ namespace QuestAnsWebServices.Repositories
         Task<IdentityResult> Register(UserRegisterDTO userDTO);
         Task<UserDTO> UpdateCurrentUser(string userId, UserUpdateDTO userDTO);
         Task<IdentityResult> ChangePasswordForCurrentUser(string userId, UserChangePasswordDTO model);
+        string UploadPhoto(Image image, string userId, string baseUri);
         void Signout();
     }
 
@@ -96,6 +101,32 @@ namespace QuestAnsWebServices.Repositories
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(userId));
 
             return await _userManager.FindByIdAsync(userId);
+        }
+
+        public string UploadPhoto(Image image, string userId, string baseUri)
+        {
+            var imgFolder = "/Content/UserImages";
+            var ext = Path.GetExtension(image.Name);
+            var path = AppDomain.CurrentDomain.BaseDirectory + imgFolder;
+            var tmpPath = Path.GetTempFileName() + ext;
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            FileHelper.CreateFile(tmpPath, image.Content);
+
+            var fileName = userId + ext;
+            var fullPath = Path.Combine(path, fileName);
+            var fullPathMobile = Path.Combine(path, userId + "_mob" + ext);
+
+            FileHelper.BuildImageJob(tmpPath, fullPath, new Instructions("width=460;height=102;format=png;mode=pad"));
+            FileHelper.BuildImageJob(tmpPath, fullPathMobile, new Instructions("width=190;height=44;format=png;mode=pad"));
+
+            File.Delete(tmpPath);
+
+            return baseUri + imgFolder + "/" + fileName;
         }
     }
 }

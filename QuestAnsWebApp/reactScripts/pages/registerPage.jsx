@@ -1,5 +1,9 @@
 ﻿var React = require('react');
 var RegisterForm = require('../forms/registerForm.jsx');
+var toastr = require('toastr');
+var spinner = require('../../scripts/Spinner');
+var FieldValidator = require('../../scripts/fieldValidator');
+var userActions = require('../../scripts/actions/userActions');
 
 class RegisterPage extends React.Component {
 
@@ -55,9 +59,9 @@ class RegisterPage extends React.Component {
         spinner.spin();
 
         userActions.register(this.state.user).then(function () {
-            this.context.router.push('login');
             spinner.stop();
             toastr.success("You have been registered.");
+            this.context.router.push('login');
         }.bind(this));
     }
 

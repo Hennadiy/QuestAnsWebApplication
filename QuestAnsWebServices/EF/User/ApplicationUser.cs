@@ -41,6 +41,8 @@ namespace QuestAnsWebServices.EF.User
         [MinLength(3)]
         public string Skype { get; set; }
 
+        public string PhotoUrl { get; set; }
+
         public int? CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
