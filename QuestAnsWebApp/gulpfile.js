@@ -5,7 +5,7 @@ var concat = require('gulp-concat');
 //var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var browserify = require('browserify');
-var reactify = require('reactify');
+//var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
@@ -64,7 +64,6 @@ gulp.task('bundle', ['js'], function() {
             cache: {}, // <---- here is important things for optimization 
             packageCache: {} // <----  and here
         })
-        .transform(reactify)
         .bundle()
         .pipe(source('all.js'))
         .pipe(gulp.dest(config.paths.dist.js));
@@ -91,7 +90,7 @@ gulp.task('images', function() {
 gulp.task('watch', function() {
     gulp.watch(config.paths.src.html, ['html']);
     gulp.watch(config.paths.src.css, ['css']);
-    //gulp.watch(config.paths.src.mainJs, ['bundle']);
+    gulp.watch(config.paths.src.mainJs, ['bundle']);
 });
 
 gulp.task('html', ['bundle', 'css', 'images'], function() {

@@ -15,7 +15,7 @@ var LoginForm = (function (_super) {
     }
     LoginForm.prototype.render = function () {
         return (<div>
-                <h1>Login Form 11</h1>
+                <h1>Login Form</h1>
                 <form>
                     <field_1.Field label="Login" name="UserName" required="true" value={this.props.user.UserName} onChange={this.props.onChange} error={this.props.errors.UserName}/>
                     <field_1.Field type="password" name="Password" label="Password" required="true" value={this.props.user.Password} onChange={this.props.onChange} error={this.props.errors.Password}/>
