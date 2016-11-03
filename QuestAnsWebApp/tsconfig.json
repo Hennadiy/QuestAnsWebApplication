@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "jsx": "preserve"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "react/react.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "spin/spin.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "toastr/toastr.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "vinyl/vinyl.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "orchestrator/orchestrator.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "gulp/gulp.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "q/Q.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "node/node.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "gulp-concat/gulp-concat.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "gulp-uglify/gulp-uglify.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "source-map/source-map.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "uglify-js/uglify-js.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "gulp-less/gulp-less.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "browserify/browserify.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "glob/glob.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "del/del.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "vinyl-source-stream/vinyl-source-stream.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "gulp-typescript/gulp-typescript.d.ts": {
+      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
+    },
+    "fbemitter/fbemitter.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "flux/flux.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "immutable/immutable.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "react-router/history.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    },
+    "react-datepicker/react-datepicker.d.ts": {
+      "commit": "baadc0b1309dbd75b25bac04bbee67976e2fbd17"
+    }
+  }
+}

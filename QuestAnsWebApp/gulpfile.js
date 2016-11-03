@@ -2,12 +2,13 @@
 var connect = require('gulp-connect');
 var open = require('gulp-open');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+//var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
-var del = require('del');
+var ts = require("gulp-typescript");
+var tsProject = ts.createProject("tsconfig.json");
 
 var config = {
     serverConfig: {
@@ -15,6 +16,7 @@ var config = {
         devBaseUrl: 'http://localhost'
     },
     paths: {
+        temp: 'temp',
         homepage: 'build/index.html',
         dist: {
             html: 'build',
@@ -27,7 +29,7 @@ var config = {
             images: [
                 'Content/*.*',
                 'Content/*-*.*'
-                ],
+            ],
             copyCssFiles: [
                 'node_modules/bootstrap/dist/css/bootstrap.css.map'
             ],
@@ -38,22 +40,37 @@ var config = {
                 'CSS/*.less',
                 'CSS/*.css'
             ],
-            mainJs: 'reactScripts/routes.jsx'
+            mainJs: 'temp/reactScripts/routes.jsx'
         }
     },
 };
 
-gulp.task('js', function () {
-    browserify(config.paths.src.mainJs)
-        .transform(reactify)
-        .bundle()
+gulp.task('js', function() {
+    /**/
+    return tsProject.src()
+        .pipe(tsProject())
         .on('error', console.error.bind(console))
-        .pipe(source('all.js'))
-        .pipe(gulp.dest(config.paths.dist.js))
+        .js.pipe(gulp.dest(config.paths.temp))
         .pipe(connect.reload());
 });
 
-gulp.task('css', function () {
+gulp.task('bundle', ['js'], function() {
+    return browserify({
+            entries: [config.paths.src.mainJs],
+            extensions: [".js", ".jsx"],
+            transform: ['reactify'],
+            debug: true,
+            fullPaths: true,
+            cache: {}, // <---- here is important things for optimization 
+            packageCache: {} // <----  and here
+        })
+        .transform(reactify)
+        .bundle()
+        .pipe(source('all.js'))
+        .pipe(gulp.dest(config.paths.dist.js));
+});
+
+gulp.task('css', function() {
 
     gulp.src(config.paths.src.copyCssFiles)
         .pipe(gulp.dest(config.paths.dist.css))
@@ -66,18 +83,24 @@ gulp.task('css', function () {
         .pipe(connect.reload());
 });
 
-gulp.task('images', function () {
+gulp.task('images', function() {
     gulp.src(config.paths.src.images)
         .pipe(gulp.dest(config.paths.dist.images));
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch(config.paths.src.html, ['html']);
     gulp.watch(config.paths.src.css, ['css']);
-    gulp.watch(config.paths.src.js, ['js']);
+    //gulp.watch(config.paths.src.mainJs, ['bundle']);
 });
 
-gulp.task('connect', function () {
+gulp.task('html', ['bundle', 'css', 'images'], function() {
+    gulp.src(config.paths.src.html)
+        .pipe(gulp.dest(config.paths.dist.html))
+        .pipe(connect.reload());
+});
+
+gulp.task('connect', ['html'], function() {
     connect.server({
         root: ['build'],
         port: config.serverConfig.port,
@@ -87,17 +110,9 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('open', ['connect'], function () {
+gulp.task('open', ['connect'], function() {
     gulp.src(config.paths.homepage)
         .pipe(open({ uri: config.serverConfig.devBaseUrl + ':' + config.serverConfig.port + '/' }));
 });
 
-gulp.task('html', ['js', 'css', 'images'], function () {
-    gulp.src(config.paths.src.html)
-        .pipe(gulp.dest(config.paths.dist.html))
-        .pipe(connect.reload());
-});
-
-gulp.task('default', ['html', 'open', 'watch']);
-
-gulp.run();
+gulp.task('default', ['open', 'watch']);

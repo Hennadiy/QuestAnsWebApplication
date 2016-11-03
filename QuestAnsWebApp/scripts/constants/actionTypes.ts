@@ -1,0 +1,8 @@
+﻿export let ActionTypes = {
+    SIGNIN: "SIGNIN",
+    REGISTER: "REGISTER",
+    SIGNOUT: "SIGNOUT",
+    INIT: "INIT",
+    USER_UPDATE: "USER_UPDATE",
+    UPLOAD_PHOTO: "UPLOAD_PHOTO"
+};
