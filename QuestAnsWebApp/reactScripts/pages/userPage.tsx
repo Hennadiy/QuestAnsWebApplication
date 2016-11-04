@@ -31,11 +31,10 @@ export class UserPage extends React.Component<any, any> {
         this.goToEdit = this.goToEdit.bind(this);
         this.cancelEditing = this.cancelEditing.bind(this);
         this.addImage = this.addImage.bind(this);
-        this.useCheckings = this.useCheckings.bind(this);
+        this.getUserProfile = this.getUserProfile.bind(this);
     }
 
-    useCheckings() {
-        var userName = this.props.routeParams.userName;
+    getUserProfile(userName: string): void {
         if (userName) {
             userActions.getUserByUserName(userName)
                 .then(function (user) {
@@ -53,11 +52,11 @@ export class UserPage extends React.Component<any, any> {
         }
     }
     componentWillMount() {
-        this.useCheckings();
+        this.getUserProfile(this.props.routeParams.userName);
     }
 
-    componentWillReceiveProps(nextProps) {  //TODO: fix bugs with navigation between user profiles
-        this.useCheckings();
+    componentWillReceiveProps(nextProps) {
+        this.getUserProfile(nextProps.routeParams.userName);
     }
 
     setUserState(event) {

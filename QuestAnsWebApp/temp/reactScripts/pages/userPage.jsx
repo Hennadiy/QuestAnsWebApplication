@@ -30,10 +30,9 @@ var UserPage = (function (_super) {
         this.goToEdit = this.goToEdit.bind(this);
         this.cancelEditing = this.cancelEditing.bind(this);
         this.addImage = this.addImage.bind(this);
-        this.useCheckings = this.useCheckings.bind(this);
+        this.getUserProfile = this.getUserProfile.bind(this);
     }
-    UserPage.prototype.useCheckings = function () {
-        var userName = this.props.routeParams.userName;
+    UserPage.prototype.getUserProfile = function (userName) {
         if (userName) {
             userActions_1.userActions.getUserByUserName(userName)
                 .then(function (user) {
@@ -51,10 +50,10 @@ var UserPage = (function (_super) {
         }
     };
     UserPage.prototype.componentWillMount = function () {
-        this.useCheckings();
+        this.getUserProfile(this.props.routeParams.userName);
     };
     UserPage.prototype.componentWillReceiveProps = function (nextProps) {
-        this.useCheckings();
+        this.getUserProfile(nextProps.routeParams.userName);
     };
     UserPage.prototype.setUserState = function (event) {
         var field = event.target.name;
