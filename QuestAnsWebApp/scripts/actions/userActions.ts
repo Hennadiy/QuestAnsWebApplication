@@ -1,4 +1,6 @@
 ﻿import * as $ from 'jquery';
+import { fail } from 'assert';
+import { UserAction } from '../models/userModels';
 import { ajax } from '../ajax';
 import { dispatcher } from '../dispatcher/dispatcher';
 import { ActionTypes } from '../constants/actionTypes';
@@ -7,37 +9,35 @@ class UserActions {
     private readonly USER_CONTROLLER_NAME = "account";
 
     public signin(user): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
         user.grant_type = 'password';
 
         ajax.getToken(user, function () {
 
-            var userNameModel = {
+            let userNameModel = {
                 userName: user.UserName
             };
 
             ajax.get(this.USER_CONTROLLER_NAME, 'GetUser', userNameModel, true, (userModel) => {
-                dispatcher.dispatch({
-                    actionType: ActionTypes.SIGNIN,
-                    user: userModel
-                });
+                let action = new UserAction(ActionTypes.SIGNIN, userModel, false);
+
+                dispatcher.dispatch(action);
 
                 defer.resolve(userModel)
             }, null);
-        });
+        }.bind(this));
 
         return defer.promise();
     }
 
     uploadUserPhoto(image): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
         ajax.post(this.USER_CONTROLLER_NAME, 'UploadPhoto', image, true, (userModel) => {
-            dispatcher.dispatch({
-                actionType: ActionTypes.UPLOAD_PHOTO,
-                user: userModel
-            });
+            let action = new UserAction(ActionTypes.UPLOAD_PHOTO, userModel, false);
+
+            dispatcher.dispatch(action);
 
             defer.resolve(userModel)
         }, () => {
@@ -48,18 +48,13 @@ class UserActions {
     }
 
     public getUserByUserName(userName: string): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
-        var userNameModel = {
+        let userNameModel = {
             userName: userName
         };
 
         ajax.get(this.USER_CONTROLLER_NAME, 'GetUser', userNameModel, true, (userModel) => {
-            dispatcher.dispatch({
-                actionType: ActionTypes.SIGNIN,
-                user: userModel
-            });
-
             defer.resolve(userModel)
         }, () => {
             defer.reject();
@@ -69,7 +64,7 @@ class UserActions {
     }
 
     public getCurrentUser(): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
         ajax.get(this.USER_CONTROLLER_NAME, 'GetCurrentUser', null, true, (userModel) => {
             defer.resolve(userModel)
@@ -81,13 +76,12 @@ class UserActions {
     }
 
     public register(user): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
         ajax.post(this.USER_CONTROLLER_NAME, 'register', user, false, () => {
-            dispatcher.dispatch({
-                actionType: ActionTypes.REGISTER,
-                user: null
-            });
+            let action = new UserAction(ActionTypes.REGISTER, null, false);
+
+            dispatcher.dispatch(action);
 
             defer.resolve()
         }, null);
@@ -96,13 +90,12 @@ class UserActions {
     }
 
     public update(user): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
-        ajax.post(this.USER_CONTROLLER_NAME, 'UpdateCurrentUser', user, true, function (user) {
-            dispatcher.dispatch({
-                actionType: ActionTypes.USER_UPDATE,
-                user: user
-            });
+        ajax.post(this.USER_CONTROLLER_NAME, 'UpdateCurrentUser', user, true, (user) => {
+            let action = new UserAction(ActionTypes.USER_UPDATE, user, false);
+
+            dispatcher.dispatch(action);
 
             defer.resolve(user)
         }, null);
@@ -111,15 +104,14 @@ class UserActions {
     }
 
     public signout(): JQueryPromise<{}> {
-        var defer = $.Deferred();
+        let defer = $.Deferred();
 
         ajax.post(this.USER_CONTROLLER_NAME, 'signout', null, true, function () {
             ajax.removeToken();
 
-            dispatcher.dispatch({
-                actionType: ActionTypes.SIGNOUT,
-                user: null
-            });
+            let action = new UserAction(ActionTypes.SIGNOUT, null, false);
+
+            dispatcher.dispatch(action);
 
             defer.resolve()
         }, null);

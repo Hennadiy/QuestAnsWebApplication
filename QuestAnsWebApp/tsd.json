@@ -53,9 +53,6 @@
     "glob/glob.d.ts": {
       "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
     },
-    "del/del.d.ts": {
-      "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
-    },
     "minimatch/minimatch.d.ts": {
       "commit": "769e7894540064a33ef43c3f420d0bf4092820f4"
     },

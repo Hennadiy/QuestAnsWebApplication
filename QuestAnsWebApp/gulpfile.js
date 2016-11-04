@@ -5,10 +5,8 @@ var concat = require('gulp-concat');
 //var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var browserify = require('browserify');
-//var reactify = require('reactify');
 var source = require('vinyl-source-stream');
-var ts = require("gulp-typescript");
-var tsProject = ts.createProject("tsconfig.json");
+var tsProject = require("gulp-typescript").createProject("tsconfig.json");
 
 var config = {
     serverConfig: {
@@ -40,13 +38,18 @@ var config = {
                 'CSS/*.less',
                 'CSS/*.css'
             ],
-            mainJs: 'temp/reactScripts/routes.jsx'
+            mainJs: 'temp/reactScripts/routes.jsx',
+            ts: [
+                'scripts/*.ts',
+                'scripts/*/*.ts',
+                'reactScripts/*.tsx',
+                'reactScripts/*/*.tsx'
+            ]
         }
     },
 };
 
-gulp.task('js', function() {
-    /**/
+gulp.task('js', function () {
     return tsProject.src()
         .pipe(tsProject())
         .on('error', console.error.bind(console))
@@ -54,7 +57,7 @@ gulp.task('js', function() {
         .pipe(connect.reload());
 });
 
-gulp.task('bundle', ['js'], function() {
+gulp.task('bundle', ['js'], function () {
     return browserify({
             entries: [config.paths.src.mainJs],
             extensions: [".js", ".jsx"],
@@ -69,7 +72,7 @@ gulp.task('bundle', ['js'], function() {
         .pipe(gulp.dest(config.paths.dist.js));
 });
 
-gulp.task('css', function() {
+gulp.task('css', function () {
 
     gulp.src(config.paths.src.copyCssFiles)
         .pipe(gulp.dest(config.paths.dist.css))
@@ -82,24 +85,24 @@ gulp.task('css', function() {
         .pipe(connect.reload());
 });
 
-gulp.task('images', function() {
+gulp.task('images', function () {
     gulp.src(config.paths.src.images)
         .pipe(gulp.dest(config.paths.dist.images));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch(config.paths.src.html, ['html']);
     gulp.watch(config.paths.src.css, ['css']);
-    gulp.watch(config.paths.src.mainJs, ['bundle']);
+    gulp.watch(config.paths.src.ts, ['bundle']);
 });
 
-gulp.task('html', ['bundle', 'css', 'images'], function() {
+gulp.task('html', ['bundle', 'css', 'images'], function () {
     gulp.src(config.paths.src.html)
         .pipe(gulp.dest(config.paths.dist.html))
         .pipe(connect.reload());
 });
 
-gulp.task('connect', ['html'], function() {
+gulp.task('connect', ['html'], function () {
     connect.server({
         root: ['build'],
         port: config.serverConfig.port,
@@ -109,9 +112,11 @@ gulp.task('connect', ['html'], function() {
     });
 });
 
-gulp.task('open', ['connect'], function() {
+gulp.task('open', ['connect'], function () {
     gulp.src(config.paths.homepage)
-        .pipe(open({ uri: config.serverConfig.devBaseUrl + ':' + config.serverConfig.port + '/' }));
+        .pipe(open({
+            uri: config.serverConfig.devBaseUrl + ':' + config.serverConfig.port + '/'
+        }));
 });
 
 gulp.task('default', ['open', 'watch']);

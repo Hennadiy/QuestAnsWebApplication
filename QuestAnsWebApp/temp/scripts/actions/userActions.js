@@ -1,5 +1,6 @@
 "use strict";
 var $ = require('jquery');
+var userModels_1 = require('../models/userModels');
 var ajax_1 = require('../ajax');
 var dispatcher_1 = require('../dispatcher/dispatcher');
 var actionTypes_1 = require('../constants/actionTypes');
@@ -15,22 +16,18 @@ var UserActions = (function () {
                 userName: user.UserName
             };
             ajax_1.ajax.get(this.USER_CONTROLLER_NAME, 'GetUser', userNameModel, true, function (userModel) {
-                dispatcher_1.dispatcher.dispatch({
-                    actionType: actionTypes_1.ActionTypes.SIGNIN,
-                    user: userModel
-                });
+                var action = new userModels_1.UserAction(actionTypes_1.ActionTypes.SIGNIN, userModel, false);
+                dispatcher_1.dispatcher.dispatch(action);
                 defer.resolve(userModel);
             }, null);
-        });
+        }.bind(this));
         return defer.promise();
     };
     UserActions.prototype.uploadUserPhoto = function (image) {
         var defer = $.Deferred();
         ajax_1.ajax.post(this.USER_CONTROLLER_NAME, 'UploadPhoto', image, true, function (userModel) {
-            dispatcher_1.dispatcher.dispatch({
-                actionType: actionTypes_1.ActionTypes.UPLOAD_PHOTO,
-                user: userModel
-            });
+            var action = new userModels_1.UserAction(actionTypes_1.ActionTypes.UPLOAD_PHOTO, userModel, false);
+            dispatcher_1.dispatcher.dispatch(action);
             defer.resolve(userModel);
         }, function () {
             defer.reject();
@@ -43,10 +40,6 @@ var UserActions = (function () {
             userName: userName
         };
         ajax_1.ajax.get(this.USER_CONTROLLER_NAME, 'GetUser', userNameModel, true, function (userModel) {
-            dispatcher_1.dispatcher.dispatch({
-                actionType: actionTypes_1.ActionTypes.SIGNIN,
-                user: userModel
-            });
             defer.resolve(userModel);
         }, function () {
             defer.reject();
@@ -65,10 +58,8 @@ var UserActions = (function () {
     UserActions.prototype.register = function (user) {
         var defer = $.Deferred();
         ajax_1.ajax.post(this.USER_CONTROLLER_NAME, 'register', user, false, function () {
-            dispatcher_1.dispatcher.dispatch({
-                actionType: actionTypes_1.ActionTypes.REGISTER,
-                user: null
-            });
+            var action = new userModels_1.UserAction(actionTypes_1.ActionTypes.REGISTER, null, false);
+            dispatcher_1.dispatcher.dispatch(action);
             defer.resolve();
         }, null);
         return defer.promise();
@@ -76,10 +67,8 @@ var UserActions = (function () {
     UserActions.prototype.update = function (user) {
         var defer = $.Deferred();
         ajax_1.ajax.post(this.USER_CONTROLLER_NAME, 'UpdateCurrentUser', user, true, function (user) {
-            dispatcher_1.dispatcher.dispatch({
-                actionType: actionTypes_1.ActionTypes.USER_UPDATE,
-                user: user
-            });
+            var action = new userModels_1.UserAction(actionTypes_1.ActionTypes.USER_UPDATE, user, false);
+            dispatcher_1.dispatcher.dispatch(action);
             defer.resolve(user);
         }, null);
         return defer.promise();
@@ -88,10 +77,8 @@ var UserActions = (function () {
         var defer = $.Deferred();
         ajax_1.ajax.post(this.USER_CONTROLLER_NAME, 'signout', null, true, function () {
             ajax_1.ajax.removeToken();
-            dispatcher_1.dispatcher.dispatch({
-                actionType: actionTypes_1.ActionTypes.SIGNOUT,
-                user: null
-            });
+            var action = new userModels_1.UserAction(actionTypes_1.ActionTypes.SIGNOUT, null, false);
+            dispatcher_1.dispatcher.dispatch(action);
             defer.resolve();
         }, null);
         return defer.promise();

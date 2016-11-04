@@ -5,37 +5,21 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var React = require('react');
+var toastr = require('toastr');
+var userModels_1 = require('../../scripts/models/userModels');
 var EditUserForm_1 = require('../forms/EditUserForm');
 var displayUserForm_1 = require('../forms/displayUserForm');
 var panel_1 = require('../components/panel');
 var userStore_1 = require('../../scripts/stores/userStore');
 var userActions_1 = require('../../scripts/actions/userActions');
 var Spinner_1 = require('../../scripts/Spinner');
-var toastr = require('toastr');
 var checker_1 = require('../../scripts/checker');
 var UserPage = (function (_super) {
     __extends(UserPage, _super);
     function UserPage() {
         _super.call(this);
         this.state = {
-            user: {
-                Name: '',
-                Surname: '',
-                Email: '',
-                UserName: '',
-                Skype: '',
-                PhoneNumber: '',
-                PhotoUrl: '',
-                Birthdate: null,
-                CityId: null,
-                City: {
-                    Value: null
-                },
-                CountryId: null,
-                Country: {
-                    Value: null
-                }
-            },
+            user: new userModels_1.User(),
             image: null,
             currentUser: userStore_1.userStore.getCurrentUser(),
             allowEdit: false,
@@ -46,8 +30,9 @@ var UserPage = (function (_super) {
         this.goToEdit = this.goToEdit.bind(this);
         this.cancelEditing = this.cancelEditing.bind(this);
         this.addImage = this.addImage.bind(this);
+        this.useCheckings = this.useCheckings.bind(this);
     }
-    UserPage.prototype.componentWillMount = function () {
+    UserPage.prototype.useCheckings = function () {
         var userName = this.props.routeParams.userName;
         if (userName) {
             userActions_1.userActions.getUserByUserName(userName)
@@ -64,6 +49,12 @@ var UserPage = (function (_super) {
         else {
             this.context.router.push('/404');
         }
+    };
+    UserPage.prototype.componentWillMount = function () {
+        this.useCheckings();
+    };
+    UserPage.prototype.componentWillReceiveProps = function (nextProps) {
+        this.useCheckings();
     };
     UserPage.prototype.setUserState = function (event) {
         var field = event.target.name;

@@ -53,7 +53,7 @@ var Ajax = (function () {
                 failFunc("Not Authorize", null);
                 return;
             }
-            //options.headers = {};
+            options.headers = {};
             options.headers['Authorization'] = 'Bearer ' + token;
         }
         $.ajax(options)

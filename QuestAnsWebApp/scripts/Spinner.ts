@@ -39,37 +39,28 @@ class SpinnerCustom {
     }
 
     public stop(): void {
-        this.hideBackdrop();
         this.spinner.stop();
+        this.hideBackdrop();
     }
 
     private showBackdrop(): void {
         let animate = "fade";
-        //var doAnimate = $.support.transition && animate;
 
         let _backdrop = $(document.createElement('div'));
 
         _backdrop.addClass('modal-backdrop ' + animate)
             .appendTo("body");
 
-        //if (doAnimate) 
-        _backdrop[0].offsetWidth // force reflow
-
         _backdrop.addClass('in')
     }
 
     private hideBackdrop(): void {
-        let callbackRemove = (): void => {
-            _backdrop.remove();
-        };
 
         let _backdrop = $('.modal-backdrop');
+
         _backdrop.removeClass('in');
 
-        //$.support.transition && _backdrop.hasClass('fade') ?
-        _backdrop.one('bsTransitionEnd', callbackRemove)
-        //.emulateTransitionEnd(this.BACKDROP_TRANSITION_DURATION) 
-        //:callbackRemove()
+        _backdrop.remove();
     }
 }
 

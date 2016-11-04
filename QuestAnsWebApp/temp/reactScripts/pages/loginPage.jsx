@@ -8,6 +8,7 @@ var React = require('react');
 var loginForm_1 = require('../forms/loginForm');
 var userActions_1 = require('../../scripts/actions/userActions');
 var fieldValidator_1 = require('../../scripts/fieldValidator');
+var spinner_1 = require('../../scripts/spinner');
 var LoginPage = (function (_super) {
     __extends(LoginPage, _super);
     function LoginPage() {
@@ -42,8 +43,10 @@ var LoginPage = (function (_super) {
         if (!this.formIsValid()) {
             return;
         }
+        spinner_1.spinner.spin();
         userActions_1.userActions.signin(this.state.user).then(function () {
             this.context.router.push('/user/' + this.state.user.UserName);
+            spinner_1.spinner.stop();
         }.bind(this));
     };
     LoginPage.prototype.render = function () {

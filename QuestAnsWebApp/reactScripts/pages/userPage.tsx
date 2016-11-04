@@ -1,12 +1,13 @@
 ﻿import * as React from 'react';
 import * as $ from 'jquery';
+import * as toastr from 'toastr';
+import { User } from '../../scripts/models/userModels';
 import { EditUserForm } from '../forms/EditUserForm';
 import { DisplayUserForm } from '../forms/displayUserForm';
 import { Panel } from '../components/panel';
 import { userStore } from '../../scripts/stores/userStore';
 import { userActions } from '../../scripts/actions/userActions';
 import { spinner } from '../../scripts/Spinner';
-import * as  toastr from 'toastr';
 import { Checker } from '../../scripts/checker';
 
 export class UserPage extends React.Component<any, any> {
@@ -18,24 +19,7 @@ export class UserPage extends React.Component<any, any> {
         super();
 
         this.state = {
-            user: {
-                Name: '',
-                Surname: '',
-                Email: '',
-                UserName: '',
-                Skype: '',
-                PhoneNumber: '',
-                PhotoUrl: '',
-                Birthdate: null,
-                CityId: null,
-                City: {
-                    Value: null
-                },
-                CountryId: null,
-                Country: {
-                    Value: null
-                }
-            },
+            user: new User(),
             image: null,
             currentUser: userStore.getCurrentUser(),
             allowEdit: false,
@@ -47,9 +31,10 @@ export class UserPage extends React.Component<any, any> {
         this.goToEdit = this.goToEdit.bind(this);
         this.cancelEditing = this.cancelEditing.bind(this);
         this.addImage = this.addImage.bind(this);
+        this.useCheckings = this.useCheckings.bind(this);
     }
 
-    componentWillMount() {
+    useCheckings() {
         var userName = this.props.routeParams.userName;
         if (userName) {
             userActions.getUserByUserName(userName)
@@ -66,6 +51,13 @@ export class UserPage extends React.Component<any, any> {
         else {
             this.context.router.push('/404');
         }
+    }
+    componentWillMount() {
+        this.useCheckings();
+    }
+
+    componentWillReceiveProps(nextProps) {  //TODO: fix bugs with navigation between user profiles
+        this.useCheckings();
     }
 
     setUserState(event) {

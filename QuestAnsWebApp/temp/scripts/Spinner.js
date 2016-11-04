@@ -34,29 +34,20 @@ var SpinnerCustom = (function () {
         this.spinner.spin(this.target);
     };
     SpinnerCustom.prototype.stop = function () {
-        this.hideBackdrop();
         this.spinner.stop();
+        this.hideBackdrop();
     };
     SpinnerCustom.prototype.showBackdrop = function () {
         var animate = "fade";
-        //var doAnimate = $.support.transition && animate;
         var _backdrop = $(document.createElement('div'));
         _backdrop.addClass('modal-backdrop ' + animate)
             .appendTo("body");
-        //if (doAnimate) 
-        _backdrop[0].offsetWidth; // force reflow
         _backdrop.addClass('in');
     };
     SpinnerCustom.prototype.hideBackdrop = function () {
-        var callbackRemove = function () {
-            _backdrop.remove();
-        };
         var _backdrop = $('.modal-backdrop');
         _backdrop.removeClass('in');
-        //$.support.transition && _backdrop.hasClass('fade') ?
-        _backdrop.one('bsTransitionEnd', callbackRemove);
-        //.emulateTransitionEnd(this.BACKDROP_TRANSITION_DURATION) 
-        //:callbackRemove()
+        _backdrop.remove();
     };
     return SpinnerCustom;
 }());

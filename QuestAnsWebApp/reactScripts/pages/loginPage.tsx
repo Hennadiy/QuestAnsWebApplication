@@ -2,6 +2,7 @@
 import { LoginForm } from '../forms/loginForm';
 import { userActions } from '../../scripts/actions/userActions';
 import { FieldValidator } from '../../scripts/fieldValidator';
+import { spinner } from '../../scripts/spinner';
 
 export class LoginPage extends React.Component<any, any> {
     static contextTypes = {
@@ -50,8 +51,11 @@ export class LoginPage extends React.Component<any, any> {
             return;
         }
 
+        spinner.spin()
+
         userActions.signin(this.state.user).then(function () {
             this.context.router.push('/user/' + this.state.user.UserName);
+            spinner.stop();
         }.bind(this));
     }
 

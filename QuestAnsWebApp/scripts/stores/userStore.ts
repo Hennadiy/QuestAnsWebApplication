@@ -24,6 +24,7 @@ dispatcher.register((action: UserAction): void => {
             user = action.User;
             userStore.emitChange();
             break;
+
         case ActionTypes.INIT:
             user = action.InitUser;
             userStore.emitChange();
@@ -33,14 +34,17 @@ dispatcher.register((action: UserAction): void => {
             user = action.User;
             userStore.emitChange();
             break;
+
         case ActionTypes.SIGNOUT:
             user = null;
             userStore.emitChange();
             break;
+
         case ActionTypes.USER_UPDATE:
             user = action.User;
             userStore.emitChange();
             break;
+            
         case ActionTypes.REGISTER:
             break;
         default: break;

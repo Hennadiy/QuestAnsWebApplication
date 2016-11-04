@@ -70,7 +70,7 @@ class Ajax {
                 return;
             }
 
-            //options.headers = {};
+            options.headers = {};
             options.headers['Authorization'] = 'Bearer ' + token;
         }
 

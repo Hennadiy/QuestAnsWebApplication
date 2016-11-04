@@ -1,5 +1,4 @@
-﻿import { stat } from 'fs';
-import { EventEmitter } from 'events';
+﻿import { EventEmitter } from 'events';
 
 export class Store extends EventEmitter {
     private readonly CHANGE_EVENT = "change"
