@@ -11,6 +11,7 @@ namespace QuestAnsWebServices
         protected void Application_Start()
         {
             AutoMapperConfig.Register();
+
             DbExtension.Initialize<ApplicationDbContext>(false);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);

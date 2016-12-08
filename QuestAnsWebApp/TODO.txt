@@ -1,0 +1,3 @@
+1. Ability to find people
+2. Added comments under user profile
+3. Added entities question\answers
